@@ -1,30 +1,59 @@
 import { BuilderOutput, createBuilder } from '@angular-devkit/architect';
-import { JsonObject } from '@angular-devkit/core';
-import { spawn } from 'child_process';
+import { exec } from 'child_process';
 
-interface Options extends JsonObject {
-  command: string;
-  args: string[];
-}
+import {
+  createBuildCommand,
+  extractOnlyErrors,
+  getAllErrors,
+  getListOfFilesWithError,
+  getStrictFilesWithError,
+  getTsConfigPath,
+  listAllErrorsInStrictFiles,
+  Options,
+} from './helper';
 
 export default createBuilder<Options>((options, context) => {
   return new Promise<BuilderOutput>((resolve, reject) => {
-    context.reportStatus(`Executing "${options.command}"...`);
-    const child = spawn(options.command, options.args, {
-      stdio: 'pipe',
-    });
+    const projectName = context.target ? context.target.project : '';
+    context.getProjectMetadata(projectName).then((projectMetaData) => {
+      const tsConfigPath = getTsConfigPath(projectMetaData);
+      const command = createBuildCommand(options, tsConfigPath);
 
-    child.stdout.on('data', (data) => {
-      context.logger.info(data.toString());
-    });
-    child.stderr.on('data', (data) => {
-      context.logger.error(data.toString());
-      reject();
-    });
+      context.reportStatus(`Executing "${command}"...`);
 
-    context.reportStatus(`Done.`);
-    child.on('close', (code) => {
-      resolve({ success: code === 0 });
+      exec(command, (error) => {
+        console.log('\n\n________________________________');
+        if (error) {
+          const errorMessage = extractOnlyErrors(error.message);
+
+          const listOfFilesWithError = getListOfFilesWithError(errorMessage);
+          if (listOfFilesWithError.size === 0) {
+            // Has different errors, need to report same
+            reject(error);
+            return;
+          }
+
+          const strictFilesWithError = getStrictFilesWithError(
+            context,
+            tsConfigPath,
+            listOfFilesWithError
+          );
+          if (strictFilesWithError.length === 0) {
+            resolve({ success: true });
+            return;
+          }
+
+          const errorsArr = getAllErrors(errorMessage, projectName);
+          const errorsInStrictFiles = listAllErrorsInStrictFiles(
+            strictFilesWithError,
+            errorsArr
+          );
+          reject(new Error('Fix these issues: ' + errorsInStrictFiles));
+          return;
+        }
+        resolve({ success: true });
+        return;
+      });
     });
   });
 });

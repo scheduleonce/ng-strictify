@@ -1,6 +1,6 @@
 {
   "builders": {
-    "command": {
+    "strictify": {
       "implementation": "./dist/src",
       "schema": "./strictify/schema.json",
       "description": "Runs any command line in the operating system."
