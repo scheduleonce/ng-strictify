@@ -5,7 +5,7 @@
   "main": "dist/src/index.js",
   "builders": "builders.json",
   "scripts": {
-    "build": "tsc"
+    "build": "rm -rf dist && tsc"
   },
   "keywords": [
     "angular-builder"
@@ -13,10 +13,10 @@
   "author": "Prakash-Verma",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "4.0.2"
+    "typescript": "4.1.5"
   },
   "dependencies": {
     "@angular-devkit/architect": "0.901.7",
-    "@types/node": "^14.14.25"
+    "@types/node": "14.14.26"
   }
 }
