@@ -1,0 +1,22 @@
+{
+  "name": "@oncehub/ng-strictify",
+  "version": "1.0.0",
+  "description": "This custom Angular builder will help to strictify the Angular project by monitoring the project with a strict tsconfig file.",
+  "main": "dist/src/index.js",
+  "builders": "builders.json",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "angular-builder"
+  ],
+  "author": "Prakash-Verma",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "4.0.2"
+  },
+  "dependencies": {
+    "@angular-devkit/architect": "0.901.7",
+    "@types/node": "^14.14.25"
+  }
+}
