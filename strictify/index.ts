@@ -48,6 +48,18 @@ export default createBuilder<Options>((options, context) => {
             return;
           }
 
+          if (options.listFilesOnly) {
+            reject(
+              new Error(
+                '\nFiles with issues: \n\n' +
+                  strictFilesWithError.join(',\n') +
+                  '\n\n'
+              )
+            );
+            clearInterval(intervalTimer);
+            return;
+          }
+
           const errorsArr = getAllErrors(errorMessage, projectName);
           const errorsInStrictFiles = listAllErrorsInStrictFiles(
             strictFilesWithError,

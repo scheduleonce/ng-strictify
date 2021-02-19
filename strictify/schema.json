@@ -7,6 +7,9 @@
     },
     "buildScript": {
       "type": "string"
+    },
+    "listFilesOnly": {
+      "type": "boolean"
     }
   }
 }

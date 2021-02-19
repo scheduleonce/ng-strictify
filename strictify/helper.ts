@@ -3,8 +3,10 @@ import { JsonObject } from '@angular-devkit/core';
 
 export interface Options extends JsonObject {
   command: string;
-  args: string[];
+  buildScript: string;
+  listFilesOnly: boolean;
 }
+
 export function createBuildCommand(options: Options, tsConfigPath: string) {
   return `npm run ${options.buildScript} -- --ts-config="${tsConfigPath}"`;
 }
@@ -22,9 +24,8 @@ export function listAllErrorsInStrictFiles(
   let newErrorString = '';
   strictFilesWithError.forEach((file) => {
     const filtered = errorsArr.filter((error) => error.indexOf(file) !== -1);
-    filtered.forEach((f) => {
-      newErrorString += f + '\n\n';
-    });
+    const combinedString = filtered.join('\n\n');
+    newErrorString += combinedString;
   });
 
   return newErrorString;
