@@ -60,7 +60,10 @@ export default createBuilder<Options>((options, context) => {
             return;
           }
 
-          const errorsArr = getAllErrors(errorMessage, projectName);
+          const projectRoot = projectMetaData.root
+            ? projectMetaData.root.toString()
+            : '';
+          const errorsArr = getAllErrors(errorMessage, projectRoot);
           const errorsInStrictFiles = listAllErrorsInStrictFiles(
             strictFilesWithError,
             errorsArr

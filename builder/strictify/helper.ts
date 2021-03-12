@@ -37,8 +37,8 @@ export function extractOnlyErrors(errMessage: string) {
   return errMessage.substring(startIndex, stopIndex);
 }
 
-export function getAllErrors(errMessage: string, projectName: String) {
-  const allIndices = findAllIndices(errMessage, projectName);
+export function getAllErrors(errMessage: string, projectRoot: string) {
+  const allIndices = findAllIndices(errMessage, projectRoot);
   const allErrors = [];
   for (let i = 0; i < allIndices.length - 1; i++) {
     const error = errMessage.substring(allIndices[i], allIndices[i + 1]);
@@ -47,10 +47,12 @@ export function getAllErrors(errMessage: string, projectName: String) {
   return allErrors;
 }
 
-function findAllIndices(errMessage: string, projectName: String) {
+function findAllIndices(errMessage: string, projectRoot: string) {
   const stopIndex = errMessage.length - 1;
 
-  const regex = new RegExp('projects/' + projectName, 'g');
+  const regexStr = projectRoot ? `${projectRoot}/src` : 'src';
+  const regex = new RegExp(regexStr, 'g');
+
   const it = errMessage.matchAll(regex);
   const allIndices = [];
   let singleOccurrence = it.next();
