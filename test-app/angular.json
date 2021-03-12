@@ -83,6 +83,13 @@
             "tsConfig": ["tsconfig.app.json"],
             "exclude": ["**/node_modules/**"]
           }
+        },
+        "strictify": {
+          "builder": "@oncehub/ng-strictify:strictify",
+          "options": {
+            "command": "strictify",
+            "buildScript": "build"
+          }
         }
       }
     }
