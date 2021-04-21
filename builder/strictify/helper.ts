@@ -111,22 +111,3 @@ function setDifference(aSet: Set<string>, bSet: Set<string>) {
   });
   return list;
 }
-
-export function startProgress() {
-  let timerCount = 0;
-  const progressText = ['|', '/', '-', '\\'];
-  const intervalTimer = setInterval(() => {
-    clearConsoleLine();
-    if (timerCount === 4) {
-      timerCount = 0;
-    }
-    process.stdout.write(progressText[timerCount]);
-    ++timerCount;
-  }, 250);
-  return intervalTimer;
-}
-
-export function clearConsoleLine() {
-  process.stdout.clearLine(0);
-  process.stdout.cursorTo(0);
-}

@@ -2,7 +2,6 @@ import { BuilderOutput, createBuilder } from '@angular-devkit/architect';
 import { exec } from 'child_process';
 
 import {
-  clearConsoleLine,
   createBuildCommand,
   extractOnlyErrors,
   getAllErrors,
@@ -11,11 +10,9 @@ import {
   getTsConfigPath,
   listAllErrorsInStrictFiles,
   Options,
-  startProgress,
 } from './helper';
 
 export default createBuilder<Options>((options, context) => {
-  const intervalTimer = startProgress();
   return new Promise<BuilderOutput>((resolve, reject) => {
     const projectName = context.target ? context.target.project : '';
     context.getProjectMetadata(projectName).then((projectMetaData) => {
@@ -24,7 +21,6 @@ export default createBuilder<Options>((options, context) => {
 
       context.reportStatus(`Executing "${command}"...`);
       exec(command, (error) => {
-        clearConsoleLine();
         console.log('\n\n________________________________');
         if (error) {
           const errorMessage = extractOnlyErrors(error.message);
@@ -33,7 +29,6 @@ export default createBuilder<Options>((options, context) => {
           if (listOfFilesWithError.size === 0) {
             // Has different errors, need to report same
             reject(error);
-            clearInterval(intervalTimer);
             return;
           }
 
@@ -44,7 +39,6 @@ export default createBuilder<Options>((options, context) => {
           );
           if (strictFilesWithError.length === 0) {
             resolve({ success: true });
-            clearInterval(intervalTimer);
             return;
           }
 
@@ -56,7 +50,6 @@ export default createBuilder<Options>((options, context) => {
                   '\n\n'
               )
             );
-            clearInterval(intervalTimer);
             return;
           }
 
@@ -69,11 +62,9 @@ export default createBuilder<Options>((options, context) => {
             errorsArr
           );
           reject(new Error('\nFix these issues: ' + errorsInStrictFiles));
-          clearInterval(intervalTimer);
           return;
         }
         resolve({ success: true });
-        clearInterval(intervalTimer);
         return;
       });
     });
