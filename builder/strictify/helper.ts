@@ -50,7 +50,7 @@ export function getAllErrors(errMessage: string, projectRoot: string) {
 function findAllIndices(errMessage: string, projectRoot: string) {
   const stopIndex = errMessage.length - 1;
 
-  const regexStr = projectRoot ? `${projectRoot}/src` : 'src';
+  const regexStr = getErrorMatchingRegex(projectRoot);
   const regex = new RegExp(regexStr, 'g');
 
   const it = errMessage.matchAll(regex);
@@ -66,8 +66,16 @@ function findAllIndices(errMessage: string, projectRoot: string) {
   return allIndices;
 }
 
+function getErrorMatchingRegex(projectRoot: string) {
+  if (projectRoot) {
+    projectRoot = projectRoot.replace(/\/$/, '');
+    return `${projectRoot}/src`;
+  }
+  return 'src';
+}
+
 export function getListOfFilesWithError(errorMessage: string) {
-  const allErrors = errorMessage.match(/src.*\.(ts|html)/g);
+  const allErrors = errorMessage.match(/src\/.*\.(ts|html)/g);
   if (allErrors) {
     allErrors.sort();
   }
