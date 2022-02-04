@@ -2,6 +2,8 @@
 
 > Incrementally update your Angular project to use the Typescript strict flag
 
+For a summary of the most recent changes to the project, please see [CHANGELOG](https://github.com/scheduleonce/ng-strictify/blob/master/CHANGELOG.md)
+
 ## Builder
 
 This is a custom Angular CLI builder, which can be used to check Angular projects with a different tsconfig file and can help in enabling some tsconfig rules incrementally.
