@@ -1,5 +1,6 @@
 import { BuilderContext } from '@angular-devkit/architect';
 import { JsonObject } from '@angular-devkit/core';
+import { spawn } from 'child_process';
 
 export interface Options extends JsonObject {
   command: string;
@@ -7,8 +8,18 @@ export interface Options extends JsonObject {
   listFilesOnly: boolean;
 }
 
-export function createBuildCommand(options: Options, tsConfigPath: string) {
-  return `npm run ${options.buildScript} -- --ts-config="${tsConfigPath}"`;
+export function executeBuildCommandInChild(
+  options: Options,
+  tsConfigPath: string
+) {
+  const cmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+  const buildProcess = spawn(cmd, [
+    'run',
+    `${options.buildScript}`,
+    `--`,
+    `--ts-config=${tsConfigPath}`,
+  ]);
+  return buildProcess;
 }
 
 export function getTsConfigPath(projectMetaData: JsonObject) {
@@ -34,6 +45,9 @@ export function listAllErrorsInStrictFiles(
 export function extractOnlyErrors(errMessage: string) {
   const stopIndex = errMessage.indexOf('npm ERR! ');
   const startIndex = errMessage.indexOf('ERROR: ');
+  if (startIndex === -1 || stopIndex === -1) {
+    return errMessage;
+  }
   return errMessage.substring(startIndex, stopIndex);
 }
 
