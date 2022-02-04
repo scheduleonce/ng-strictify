@@ -98,7 +98,7 @@ $ npm link
 Go to the test-app directory and execute the following command
 
 ```
-$ npm link @oncehub\ng-strictify
+$ npm link @oncehub/ng-strictify
 $ npm run strictify
 ```
 
