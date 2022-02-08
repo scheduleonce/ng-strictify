@@ -1,71 +1,53 @@
 import { BuilderOutput, createBuilder } from '@angular-devkit/architect';
-import { exec } from 'child_process';
 
-import {
-  createBuildCommand,
-  extractOnlyErrors,
-  getAllErrors,
-  getListOfFilesWithError,
-  getStrictFilesWithError,
-  getTsConfigPath,
-  listAllErrorsInStrictFiles,
-  Options,
-} from './helper';
+import { parseErrors } from './error-parser';
+import { executeBuildCommandInChild, getTsConfigPath, Options } from './helper';
 
 export default createBuilder<Options>((options, context) => {
   return new Promise<BuilderOutput>((resolve, reject) => {
     const projectName = context.target ? context.target.project : '';
     context.getProjectMetadata(projectName).then((projectMetaData) => {
       const tsConfigPath = getTsConfigPath(projectMetaData);
-      const command = createBuildCommand(options, tsConfigPath);
+      const buildProcess = executeBuildCommandInChild(options, tsConfigPath);
 
-      context.reportStatus(`Executing "${command}"...`);
-      exec(command, (error) => {
-        console.log('\n\n________________________________');
-        if (error) {
-          const errorMessage = extractOnlyErrors(error.message);
+      // Handling if child process failed to start
+      buildProcess.on('error', (error) => {
+        console.log('Failed to start child process: ', error);
+        reject(error);
+      });
 
-          const listOfFilesWithError = getListOfFilesWithError(errorMessage);
-          if (listOfFilesWithError.size === 0) {
-            // Has different errors, need to report same
-            reject(error);
-            return;
-          }
+      // Handling stderr
+      const stderrChunks: Uint8Array[] = [];
+      let stderrStr = '';
+      buildProcess.stderr.on('data', (data) => {
+        stderrChunks.push(data);
+      });
 
-          const strictFilesWithError = getStrictFilesWithError(
-            context,
-            tsConfigPath,
-            listOfFilesWithError
-          );
-          if (strictFilesWithError.length === 0) {
-            resolve({ success: true });
-            return;
-          }
+      buildProcess.stderr.on('end', () => {
+        stderrStr = Buffer.concat(stderrChunks).toString();
+      });
 
-          if (options.listFilesOnly) {
-            reject(
-              new Error(
-                '\nFiles with issues: \n\n' +
-                  strictFilesWithError.join(',\n') +
-                  '\n\n'
-              )
-            );
-            return;
-          }
+      buildProcess.on('close', (code, signal) => {
+        console.log(
+          `buildProcess was closed with with code: ${code} and signal: ${signal}`
+        );
+        if (code === 0) {
+          console.log('Congratulations!!! No errors found');
+          console.log('You can now remove the ng-strictify');
 
-          const projectRoot = projectMetaData.root
-            ? projectMetaData.root.toString()
-            : '';
-          const errorsArr = getAllErrors(errorMessage, projectRoot);
-          const errorsInStrictFiles = listAllErrorsInStrictFiles(
-            strictFilesWithError,
-            errorsArr
-          );
-          reject(new Error('\nFix these issues: ' + errorsInStrictFiles));
+          resolve({ success: true });
           return;
         }
-        resolve({ success: true });
-        return;
+
+        parseErrors(
+          stderrStr,
+          context,
+          tsConfigPath,
+          projectMetaData,
+          options,
+          resolve,
+          reject
+        );
       });
     });
   });
