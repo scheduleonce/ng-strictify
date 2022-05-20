@@ -8,7 +8,7 @@ metadata:
     jenkins.io/pipelineType: build
     owner: jenkins-x-quickstarts
     repository: knowledgeowl-angular
-  name: knowledgeowl-pr
+  name: ng-strictify-pr
 spec:
   pipelineSpec:
     params:
