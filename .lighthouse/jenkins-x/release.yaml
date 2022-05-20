@@ -8,7 +8,7 @@ metadata:
     jenkins.io/pipelineType: build
     owner: jenkins-x-quickstarts
     repository: node-http
-  name: sonf-release
+  name: ng-strictify-release
 spec:
   pipelineSpec:
     params:
@@ -235,97 +235,13 @@ spec:
           name: git-merge
           resources: {}
         - args:
-          - -c
-          - |
-            /bin/bash <<'EOF'
-            # Script to evaluate image tag.
-            branchName=$PULL_BASE_REF
-            echo "eval tag script for $branchName branch..."
-            teamBranchReg="team\/.*"
-            storyBranchReg=".*\/story\/.*"
-            if [[ $branchName =~ $teamBranchReg ]]; then
-              tag=$(echo $branchName | sed 's/team\//''/g' )
-            elif [[ $branchName =~ $storyBranchReg ]]; then
-              tag=$(echo $branchName | sed 's/\/.*/''/g' )
-            elif [[ $branchName == "master" ]]; then
-              tag="prod"
-            elif [[ $branchName == "qa" || $branchName == "staging-app2" ]]; then
-              tag=$branchName
-            else
-              tag="${branchName//\//'-'}"
-            fi
-            echo $tag > VERSION
-            EOF
-          command:
-          - /bin/sh
-          image: ghcr.io/jenkins-x/builder-jx:2.1.155-779
-          name: latest-version
-          resources: {}
-        - args:
-          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+          - sh deploy.sh $PULL_BASE_REF
           command:
           - /bin/sh
           - -c
-          image: ghcr.io/jenkins-x/builder-jx:2.1.155-779
-          name: setup-builder-home
+          image: dockeronce.azurecr.io/cloudbees/nodejs:sonf-v16-latest
+          name: package-build-publish
           resources: {}
-        - args:
-          - echo "Pushing image $DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$REPO_NAME:$(cat VERSION)-latest..." && cp /tekton/creds-secrets/tekton-container-registry-auth/.dockerconfigjson /kaniko/.docker/config.json
-            && /kaniko/executor $KANIKO_FLAGS --context=/workspace/source --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$REPO_NAME:$(cat VERSION)-latest
-          command:
-          - /busybox/sh
-          - -c
-          image: gcr.io/kaniko-project/executor:debug-v0.24.0
-          name: docker-build
-          resources: {}
-        - args:
-          - -c
-          - 'git config --global --add user.name ${GIT_AUTHOR_NAME:-so-integrations}; git config --global --add user.email ${GIT_AUTHOR_EMAIL:-so-integrations@oncehub.com}; git config --global credential.helper store; git clone $HELM_REPO_URL --branch $(params.PULL_BASE_REF); echo cloned url: $HELM_REPO_URL, branch $(params.PULL_BASE_REF) to dir: helm-charts;'
-          command:
-          - /bin/sh
-          image: ghcr.io/jenkins-x/builder-jx:2.1.155-779
-          name: git-clone-helm
-          resources: {}
-          workingDir: /workspace
-        - args:
-          - ./jenkins-x/continuous-deploy.sh
-          - $(params.REPO_NAME)
-          command:
-          - /bin/bash
-          image: dockeronce.azurecr.io/oncehub/continuous-deploy:latest
-          name: deploy
-          workingDir: /workspace/helm-charts
-        - args:
-          - -c
-          - 'git config --global --add user.name ${GIT_AUTHOR_NAME:-so-integrations};
-            git config --global --add user.email ${GIT_AUTHOR_EMAIL:-so-integrations@oncehub.com};
-            git config --global credential.helper store; git clone $UI_AUTOMATION_SELENIUM_REPO_URL
-            --branch UI-Automation-App3; echo cloned url: $UI_AUTOMATION_SELENIUM_REPO_URL, branch
-            UI-Automation-App3 to dir: ui-automation-framework;'
-          command:
-          - /bin/sh
-          image: ghcr.io/jenkins-x/builder-jx:2.1.155-779
-          name: git-clone-ui-automation-framework
-          resources: {}
-          workingDir: /workspace
-        - script: |
-            #!/bin/bash
-            if [[ $(params.PULL_BASE_REF) == "qa" ]]
-            then
-              echo "running integration test - (Sanity)"
-              cd /workspace/ui-automation-framework/src/test/resources/configs
-              sed -i 's/EU=false.*/EU=true/' config.properties
-              sed -i 's/RunOnLinux=false.*/RunOnLinux=true/' config.properties
-              cd ../../../../
-              
-              mvn test -P Sanity
-            fi
-          image: dockeronce.azurecr.io/oncehub/maven-chromium:exe
-          name: integration-test-ui-automation-framework
-          resources:
-            requests:
-              cpu: 900m
-              memory: 1.6Gi
         volumes:
         - emptyDir: {}
           name: workspace-volume
@@ -335,9 +251,9 @@ spec:
                 fieldPath: metadata.labels
               path: labels
           name: podinfo
-        - name: qa-cd-cred
+        - name: npm-cred
           secret:
-            secretName: qa-cd-cred
+            secretName: npm-cred
   podTemplate:
     ImagePullSecrets:
     - name: tekton-container-registry-auth
