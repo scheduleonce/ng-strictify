@@ -7,7 +7,7 @@ metadata:
     build: "1"
     jenkins.io/pipelineType: build
     owner: jenkins-x-quickstarts
-    repository: node-http
+    repository: ng-strictify
   name: ng-strictify-pr
 spec:
   pipelineSpec:
