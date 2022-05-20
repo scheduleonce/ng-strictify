@@ -14,7 +14,7 @@ npm pack
 filename="$(npm pack --dry-run | tail -n 1)"
 echo "$filename"
 echo "$1"
-cd ..
+cd ../
 npm whoami
 
 if [[ "$1" == "qa" ]] || [[ "$1" == "master" ]] || [[ "$1" == "staging" ]] || [[ "$1" == "staging-app2" ]]
