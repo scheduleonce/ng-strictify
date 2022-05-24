@@ -1,14 +1,11 @@
 #!/bin/sh
 set -e
 
-cd builder
 node ../package-deploy/npm-login.js $(cat "/etc/npm-cred/NPM_AUTH_TOKEN")
 npm whoami
-
+cd builder
 npm i
-
 npm run build
-
 npm pack
 echo "$1"
 echo "worked till npm pack"
