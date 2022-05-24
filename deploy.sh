@@ -10,17 +10,21 @@ npm i
 npm run build
 
 npm pack
-
-filename="$(npm pack --dry-run | tail -n 1)"
-echo "$filename"
 echo "$1"
+echo "worked till npm pack"
+filename="$(npm pack --dry-run | tail -n 1)"
+echo "fetched filename successfully"
+echo "$filename"
+cd ..
 npm whoami
-
+echo "starting to publish package"
 if [[ "$1" == "qa" ]] || [[ "$1" == "master" ]] || [[ "$1" == "staging" ]] || [[ "$1" == "staging-app2" ]]
 then
-  npm publish $filename --registry=https://registry.npmjs.org/
+  npm publish builder/$filename --registry=https://registry.npmjs.org/
+  echo "publishing main package"
 else
-  npm publish --tag beta $filename --registry=https://registry.npmjs.org/
+  npm publish --tag beta builder/$filename --registry=https://registry.npmjs.org/
+  echo "publishing beta package"
 fi
 
 echo "$filename package pushed to NPM successfully"
