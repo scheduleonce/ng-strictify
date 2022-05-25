@@ -1,7 +1,6 @@
 #!/bin/sh
 set -e
-npmjsToken = $(cat "/etc/npm-cred/NPM_AUTH_TOKEN")
-echo "$npmjsToken"
+
 node package-deploy/npm-login.js $(cat "/etc/npm-cred/NPM_AUTH_TOKEN")
 npm whoami
 cd builder
