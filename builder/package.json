@@ -6,7 +6,7 @@
   "builders": "builders.json",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "prepack": "cp ../README.md"
+    "prepack": "cp ../README.md ."
   },
   "keywords": [
     "angular-builder"
