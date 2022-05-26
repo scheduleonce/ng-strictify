@@ -125,3 +125,4 @@ title: string = '';
 ```
 
 And now re-run the `npm run strictify` command again. You will see that no error has been reproduced at this step.
+
