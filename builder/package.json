@@ -1,11 +1,12 @@
 {
   "name": "@oncehub/ng-strictify",
-  "version": "2.0.1-beta.0",
+  "version": "2.0.2-beta.1",
   "description": "Incrementally update your Angular project to use the Typescript strict flag.",
   "main": "dist/src/index.js",
   "builders": "builders.json",
   "scripts": {
-    "build": "rm -rf dist && tsc"
+    "build": "rm -rf dist && tsc",
+    "prepack": "cp ../README.md ."
   },
   "keywords": [
     "angular-builder"
