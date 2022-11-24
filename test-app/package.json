@@ -16,7 +16,7 @@
     "@angular/platform-browser-dynamic": "13.2.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "13.3.9",
+    "@angular-devkit/build-angular": "13.3.10",
     "@angular/cli": "13.2.2",
     "@angular/compiler-cli": "13.2.1",
     "@oncehub/ng-strictify": "2.0.1",
