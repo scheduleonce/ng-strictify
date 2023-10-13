@@ -30,23 +30,30 @@ $ npm install @oncehub/ng-strictify
 
 ## Adding to the project architect
 
-```json
+```jsonc
 // angular.json
-"app-name": {
+{
+  // ...
+  "app-name": {
     // ...
     "architect": {
-        "build": {...},
-        "serve": {...},
+      "build": {
         // ...
-        "strictify": {
-            "builder": "@oncehub/ng-strictify:strictify",
-            "options": {
-                "command": "strictify",
-                "buildScript": "build",
-                "listFilesOnly": true           // Optional
-            }
+      },
+      "serve": {
+        // ...
+      },
+      // ...
+      "strictify": {
+        "builder": "@oncehub/ng-strictify:strictify",
+        "options": {
+          "command": "strictify",
+          "buildScript": "build",
+          "listFilesOnly": true // Optional
         }
+      }
     }
+  }
 }
 ```
 
@@ -61,10 +68,14 @@ $ npm install @oncehub/ng-strictify
 
 ## Add npm custom script in package.json
 
-```json
-"scripts": {
+```jsonc
+// package.json
+{
+  // ...
+  "scripts": {
     // ...
     "strictify": "ng run app-name:strictify"
+  }
 }
 ```
 
@@ -90,7 +101,7 @@ This sample application can be used to test the custom builder. We have added al
 
 Go to the builder directory and execute the following commands
 
-```
+```sh
 $ npm run build
 $ npm link
 ```
@@ -99,7 +110,7 @@ $ npm link
 
 Go to the test-app directory and execute the following command
 
-```
+```sh
 $ npm link @oncehub/ng-strictify
 $ npm run strictify
 ```
@@ -126,3 +137,10 @@ title: string = '';
 
 And now re-run the `npm run strictify` command again. You will see that no error has been reproduced at this step.
 
+## Development
+
+Package is automatically pushed to npm when [creating a new release](.github/workflows/npm-publish.yml) on Github. Check out the release section in the repo. Read more about releases [here](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
+
+### License
+
+This module is licensed under the MIT License. See the LICENSE file for details.
