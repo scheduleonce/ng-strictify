@@ -15,9 +15,11 @@ jobs:
         with:
           node-version: "18.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npm ci
-      - run: cd builder && npm run build
-      # scoped packages are private by default so need to add public flag
-      - run: cd builder && npm publish --access public
+      - run: |
+          working-directory: ./builder
+          npm ci
+          npm run build
+          # scoped packages are private by default so need to add public flag
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
