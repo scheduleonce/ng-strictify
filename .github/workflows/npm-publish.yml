@@ -16,7 +16,7 @@ jobs:
           node-version: "18.x"
           registry-url: "https://registry.npmjs.org"
       - run: |
-          working-directory: ./builder
+          cd builder
           npm ci
           npm run build
           # scoped packages are private by default so need to add public flag
