@@ -19,7 +19,7 @@
     "@angular/build": "^18.2.1",
     "@angular/cli": "18.2.1",
     "@angular/compiler-cli": "18.2.2",
-    "@oncehub/ng-strictify": "2.0.1",
+    "@oncehub/ng-strictify": "2.0.4-beta.1",
     "@types/node": "^22.5.1",
     "tslint": "6.1.0",
     "typescript": "5.4.5"
