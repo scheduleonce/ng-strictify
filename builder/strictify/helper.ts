@@ -18,7 +18,7 @@ export function executeBuildCommandInChild(
     `${options.buildScript}`,
     `--`,
     `--ts-config=${tsConfigPath}`,
-  ]);
+  ], { stdio: ['pipe', 'pipe', 'pipe'], shell: true });
   return buildProcess;
 }
 
