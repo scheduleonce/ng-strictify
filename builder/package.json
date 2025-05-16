@@ -14,11 +14,11 @@
   "author": "Prakash-Verma <prakash.verma@oncehub.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.18",
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@angular-devkit/architect": "^0.1902.9"
+    "@angular-devkit/architect": "^0.1902.11"
   },
   "repository": {
     "type": "git",
