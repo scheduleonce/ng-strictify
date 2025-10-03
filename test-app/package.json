@@ -10,21 +10,21 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "19.2.4",
-    "@angular/compiler": "19.2.4",
-    "@angular/core": "19.2.4",
-    "@angular/platform-browser": "19.2.4",
-    "@angular/platform-browser-dynamic": "19.2.4"
+    "@angular/common": "20.3.3",
+    "@angular/compiler": "20.3.3",
+    "@angular/core": "20.3.3",
+    "@angular/platform-browser": "20.3.3",
+    "@angular/platform-browser-dynamic": "20.3.3"
   },
   "devDependencies": {
-    "@angular/build": "^19.2.10",
-    "@angular/cli": "19.2.5",
-    "@angular/compiler-cli": "19.2.4",
+    "@angular/build": "^20.3.4",
+    "@angular/cli": "20.3.4",
+    "@angular/compiler-cli": "20.3.3",
     "@oncehub/ng-strictify": "2.0.5-beta.0",
     "@types/node": "^22.13.15",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
     "eslint": "^9.23.0",
-    "typescript": "5.8.2"
+    "typescript": "^5.8.2"
   }
 }
