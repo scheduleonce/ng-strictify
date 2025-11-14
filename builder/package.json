@@ -1,6 +1,6 @@
 {
   "name": "@oncehub/ng-strictify",
-  "version": "2.0.7",
+  "version": "2.0.8-beta.0",
   "description": "Incrementally update your Angular project to use the Typescript strict flag.",
   "main": "dist/src/index.js",
   "builders": "builders.json",
