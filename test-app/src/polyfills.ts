@@ -43,9 +43,8 @@
  */
 
 /***************************************************************************************************
- * Zone JS is required by default for Angular itself.
+ * Zone JS is optional - we're using zoneless change detection in Angular 20+
  */
-import 'zone.js';  // Included with Angular CLI.
 
 
 /***************************************************************************************************
