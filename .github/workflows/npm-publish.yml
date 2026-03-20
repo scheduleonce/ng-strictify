@@ -21,7 +21,11 @@ jobs:
           npm ci
           npm run build
           # scoped packages are private by default so need to add public flag
-          npm publish --access public
+          if [ "${{ github.event.release.prerelease }}" = "true" ]; then
+            npm publish --access public --tag beta
+          else
+            npm publish --access public --tag latest
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
