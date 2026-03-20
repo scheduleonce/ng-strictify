@@ -18,6 +18,7 @@ jobs:
       - name: "Publish"
         working-directory: ./builder
         run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           npm ci
           npm run build
           # scoped packages are private by default so need to add public flag
