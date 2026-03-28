@@ -9,22 +9,26 @@
     "lint": "eslint \"src/**/*.ts\""
   },
   "private": true,
+  "overrides": {
+    "brace-expansion": "5.0.5",
+    "express-rate-limit": "8.3.1"
+  },
   "dependencies": {
-    "@angular/common": "^21.2.5",
-    "@angular/compiler": "^21.2.5",
-    "@angular/core": "^21.2.5",
-    "@angular/platform-browser": "^21.2.5",
-    "@angular/platform-browser-dynamic": "^21.2.5"
+    "@angular/common": "^21.2.6",
+    "@angular/compiler": "^21.2.6",
+    "@angular/core": "^21.2.6",
+    "@angular/platform-browser": "^21.2.6",
+    "@angular/platform-browser-dynamic": "^21.2.6"
   },
   "devDependencies": {
-    "@angular/build": "^21.2.3",
-    "@angular/cli": "^21.2.3",
-    "@angular/compiler-cli": "^21.2.5",
+    "@angular/build": "^21.2.5",
+    "@angular/cli": "^21.2.5",
+    "@angular/compiler-cli": "^21.2.6",
     "@oncehub/ng-strictify": "2.0.10-beta.2",
     "@types/node": "^25.5.0",
-    "@typescript-eslint/eslint-plugin": "^8.57.1",
-    "@typescript-eslint/parser": "^8.57.1",
-    "eslint": "^9.39.4",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
+    "eslint": "^10.1.0",
     "typescript": "^5.9.3"
   }
 }
