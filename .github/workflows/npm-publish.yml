@@ -13,7 +13,7 @@ jobs:
       # setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '24.14.1'
           registry-url: "https://registry.npmjs.org"
       - name: Who am I on npm
         run: npm whoami
@@ -31,5 +31,6 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 
 
