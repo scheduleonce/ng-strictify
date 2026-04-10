@@ -15,10 +15,10 @@ jobs:
         with:
           node-version: '24.14.1'
           registry-url: "https://registry.npmjs.org"
-      - name: Who am I on npm
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Who am I on npm
+      #   run: npm whoami
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: "Publish"
         working-directory: ./builder
         run: |
