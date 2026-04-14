@@ -24,7 +24,7 @@
     "@angular/build": "21.2.7",
     "@angular/cli": "21.2.7",
     "@angular/compiler-cli": "21.2.7",
-    "@oncehub/ng-strictify": "2.0.8-beta.1",
+    "@oncehub/ng-strictify": "2.0.10",
     "@types/node": "^25.5.0",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
     "@typescript-eslint/parser": "^8.57.2",
