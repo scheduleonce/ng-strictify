@@ -14,16 +14,16 @@
     "express-rate-limit": "8.3.1"
   },
   "dependencies": {
-    "@angular/common": "21.2.7",
-    "@angular/compiler": "21.2.7",
-    "@angular/core": "21.2.7",
-    "@angular/platform-browser": "21.2.7",
-    "@angular/platform-browser-dynamic": "21.2.7"
+    "@angular/common": "22.0.1",
+    "@angular/compiler": "22.0.1",
+    "@angular/core": "22.0.1",
+    "@angular/platform-browser": "22.0.1",
+    "@angular/platform-browser-dynamic": "22.0.1"
   },
   "devDependencies": {
-    "@angular/build": "21.2.7",
+    "@angular/build": "22.0.1",
     "@angular/cli": "21.2.7",
-    "@angular/compiler-cli": "21.2.7",
+    "@angular/compiler-cli": "22.0.1",
     "@oncehub/ng-strictify": "2.0.10",
     "@types/node": "^25.5.0",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
