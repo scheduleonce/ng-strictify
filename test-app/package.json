@@ -10,20 +10,23 @@
   },
   "private": true,
   "overrides": {
-    "brace-expansion": "5.0.5",
-    "express-rate-limit": "8.3.1"
+    "brace-expansion": "5.0.6",
+    "express-rate-limit": "8.5.1",
+    "esbuild": "0.28.1",
+    "vite": "8.0.16",
+    "@babel/core": "7.29.7"
   },
   "dependencies": {
-    "@angular/common": "21.2.7",
-    "@angular/compiler": "21.2.7",
-    "@angular/core": "21.2.7",
-    "@angular/platform-browser": "21.2.7",
-    "@angular/platform-browser-dynamic": "21.2.7"
+    "@angular/common": "21.2.17",
+    "@angular/compiler": "21.2.17",
+    "@angular/core": "21.2.17",
+    "@angular/platform-browser": "21.2.17",
+    "@angular/platform-browser-dynamic": "21.2.17"
   },
   "devDependencies": {
-    "@angular/build": "21.2.7",
-    "@angular/cli": "21.2.7",
-    "@angular/compiler-cli": "21.2.7",
+    "@angular/build": "21.2.15",
+    "@angular/cli": "21.2.15",
+    "@angular/compiler-cli": "21.2.17",
     "@oncehub/ng-strictify": "2.0.10",
     "@types/node": "^25.5.0",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
