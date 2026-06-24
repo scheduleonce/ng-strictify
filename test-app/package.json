@@ -15,7 +15,8 @@
     "esbuild": "0.28.1",
     "vite": "8.0.16",
     "@babel/core": "7.29.7",
-    "undici": "7.28.0"
+    "undici": "7.28.0",
+    "piscina": "5.2.0"
   },
   "dependencies": {
     "@angular/common": "21.2.17",
