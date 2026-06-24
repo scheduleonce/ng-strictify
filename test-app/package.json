@@ -14,7 +14,8 @@
     "express-rate-limit": "8.5.1",
     "esbuild": "0.28.1",
     "vite": "8.0.16",
-    "@babel/core": "7.29.7"
+    "@babel/core": "7.29.7",
+    "undici": "7.28.0"
   },
   "dependencies": {
     "@angular/common": "21.2.17",
@@ -24,8 +25,8 @@
     "@angular/platform-browser-dynamic": "21.2.17"
   },
   "devDependencies": {
-    "@angular/build": "21.2.15",
-    "@angular/cli": "21.2.15",
+    "@angular/build": "21.2.16",
+    "@angular/cli": "21.2.16",
     "@angular/compiler-cli": "21.2.17",
     "@oncehub/ng-strictify": "2.0.10",
     "@types/node": "^25.5.0",
